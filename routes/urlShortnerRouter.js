@@ -6,6 +6,9 @@ import {
   URLCreatedByDay,
   URLCreatedByMonth,
   deleteURL,
+  getTotalLinks,
+  getTotalClicks,
+  getMostPopularLink,
 } from "../controller/URLShortnerController.js";
 
 import { createShortCodeValidation } from "../validation/URLShortnerValidation.js";
@@ -18,10 +21,13 @@ router.get("/", (req, res) => {
 });
 
 router.post("/createShortCode", createShortCode);
-router.get("/shortCode", getLongURLByShortCode);
-router.get("/getAllURLS", getAllURLS);
-router.get("/getURLCreatedByDay", URLCreatedByDay);
-router.get("/getURLCreatedByMonth", URLCreatedByMonth);
+router.get("/:shortCode", getLongURLByShortCode);
+router.post("/getAllURLS", getAllURLS);
+router.post("/widget/getURLCreatedByDay", URLCreatedByDay);
+router.post("/widget/getURLCreatedByMonth", URLCreatedByMonth);
 router.delete("/deleteURL", deleteURL);
+router.post("/widget/totalLinks", getTotalLinks);
+router.post("/widget/totaClicks", getTotalClicks);
+router.post("/widget/mostPopular", getMostPopularLink);
 
 export const urlShortnerRouter = router;
