@@ -10,6 +10,7 @@ import {
   getPopularURL,
   getTotalClicksCount,
   getTotalLinksCount,
+  getDayWiseData,
 } from "../models/URLShorterModel.js";
 
 import { generateShortCode } from "../utility/shortCode.js";
@@ -184,5 +185,25 @@ export const getMostPopularLink = async (req, res) => {
     success: true,
     data: popular[0].longURL,
     title: "Most Popular",
+  });
+};
+
+export const getUserDataByDay = async (req, res) => {
+  const { username } = req.body;
+
+  const Data = await getDayWiseData({ username: username });
+
+  console.log("getUserDataByDay is", Data);
+  if (!Data) {
+    return res
+      .status(401)
+      .send({ message: "User data not available", success: false });
+  }
+
+  res.status(200).send({
+    message: "retrieved User data",
+    success: true,
+    data: Data,
+    title: "Day wise data",
   });
 };

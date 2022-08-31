@@ -101,3 +101,26 @@ export async function getPopularURL(data) {
     .limit(1)
     .toArray();
 }
+
+export async function getDayWiseData(data) {
+  const query = [
+    { $match: data },
+    {
+      $project: {
+        date: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
+      },
+    },
+    {
+      $group: {
+        _id: "$date",
+        count: { $sum: 1 },
+      },
+    },
+  ];
+
+  return await client
+    .db("zen")
+    .collection("urlShortner")
+    .aggregate(query)
+    .toArray();
+}

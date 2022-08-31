@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 // custom middleware
-export const verifyAWT = (request, response, next) => {
+export const verifyAuth = (request, response, next) => {
   try {
     const token = request.header("x-auth-token");
     if (!token) return response.status(401).send("Access Denied");
